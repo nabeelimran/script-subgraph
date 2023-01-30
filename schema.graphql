@@ -1,0 +1,114 @@
+type EarnPoolReward @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  amount: BigInt! # uint256
+  nonce: BigInt! # uint256
+  poolId: BigInt! # uint256
+  gemId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EarningPayout @entity(immutable: true) {
+  id: Bytes!
+  to: Bytes! # address
+  amount: BigInt! # uint256
+  nonce: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GemEquipped @entity(immutable: true) {
+  id: Bytes!
+  glassID: BigInt! # uint256
+  gemType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GlassConfiscated @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  tokenID: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GlassMinted @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  tokenID: BigInt! # uint256
+  glassType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LimitUpdated @entity(immutable: true) {
+  id: Bytes!
+  oldLimit: Int! # uint8
+  newLimit: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PercentageUpdated @entity(immutable: true) {
+  id: Bytes!
+  oldPercentage: BigInt! # uint256
+  newPercentage: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RechargeGlasses @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  value: BigInt! # uint256
+  glassId: BigInt! # uint256
+  nonce: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TreasuryUpdated @entity(immutable: true) {
+  id: Bytes!
+  oldTreasury: Bytes! # address
+  newTreasury: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type VoucherAssociated @entity(immutable: true) {
+  id: Bytes!
+  glassID: BigInt! # uint256
+  voucherType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type VoucherDissociated @entity(immutable: true) {
+  id: Bytes!
+  glassID: BigInt! # uint256
+  voucherType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

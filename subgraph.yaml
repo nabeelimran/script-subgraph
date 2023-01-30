@@ -1,0 +1,56 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ScriptTv
+    network: goerli
+    source:
+      address: "0x2E6628FbCe5196a92E908175B1992aD66F828d66"
+      abi: ScriptTv
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - EarnPoolReward
+        - EarningPayout
+        - GemEquipped
+        - GlassConfiscated
+        - GlassMinted
+        - LimitUpdated
+        - OwnershipTransferred
+        - PercentageUpdated
+        - RechargeGlasses
+        - TreasuryUpdated
+        - VoucherAssociated
+        - VoucherDissociated
+      abis:
+        - name: ScriptTv
+          file: ./abis/ScriptTv.json
+      eventHandlers:
+        - event: EarnPoolReward(indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleEarnPoolReward
+        - event: EarningPayout(indexed address,uint256,uint256)
+          handler: handleEarningPayout
+        - event: GemEquipped(indexed uint256,indexed uint8)
+          handler: handleGemEquipped
+        - event: GlassConfiscated(indexed address,indexed uint256)
+          handler: handleGlassConfiscated
+        - event: GlassMinted(indexed address,indexed uint256,indexed uint8)
+          handler: handleGlassMinted
+        - event: LimitUpdated(indexed uint8,indexed uint8)
+          handler: handleLimitUpdated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PercentageUpdated(indexed uint256,indexed uint256)
+          handler: handlePercentageUpdated
+        - event: RechargeGlasses(indexed address,uint256,indexed uint256,indexed uint256)
+          handler: handleRechargeGlasses
+        - event: TreasuryUpdated(indexed address,indexed address)
+          handler: handleTreasuryUpdated
+        - event: VoucherAssociated(indexed uint256,indexed uint8)
+          handler: handleVoucherAssociated
+        - event: VoucherDissociated(indexed uint256,indexed uint8)
+          handler: handleVoucherDissociated
+      file: ./src/script-tv.ts
