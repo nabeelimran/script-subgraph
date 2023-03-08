@@ -6,8 +6,9 @@ dataSources:
     name: ScriptTv
     network: goerli
     source:
-      address: "0x2E6628FbCe5196a92E908175B1992aD66F828d66"
+      address: "0x2E48aDE8960d40428a5eE51b04f316D8b79bFE80"
       abi: ScriptTv
+      startBlock: 8500199
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -28,29 +29,33 @@ dataSources:
       abis:
         - name: ScriptTv
           file: ./abis/ScriptTv.json
+        - name: ScriptGlass
+          file: ./abis/ScriptGlass.json
       eventHandlers:
         - event: EarnPoolReward(indexed address,indexed uint256,uint256,uint256,uint256)
           handler: handleEarnPoolReward
-        - event: EarningPayout(indexed address,uint256,uint256)
+        - event: PayoutEarned(indexed address,uint256,uint256)
           handler: handleEarningPayout
-        - event: GemEquipped(indexed uint256,indexed uint8)
+        - event: GemEquipped(uint256,uint8)
           handler: handleGemEquipped
-        - event: GlassConfiscated(indexed address,indexed uint256)
+        - event: GlassesConfiscated(indexed address,uint256)
           handler: handleGlassConfiscated
-        - event: GlassMinted(indexed address,indexed uint256,indexed uint8)
+        - event: GlassesMinted(address,uint256,uint8)
           handler: handleGlassMinted
-        - event: LimitUpdated(indexed uint8,indexed uint8)
+        - event: LimitUpdated(uint8,uint8)
           handler: handleLimitUpdated
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: PercentageUpdated(indexed uint256,indexed uint256)
+        - event: PercentageUpdated(uint256,uint256)
           handler: handlePercentageUpdated
-        - event: RechargeGlasses(indexed address,uint256,indexed uint256,indexed uint256)
+        - event: GlassesRecharged(address,uint256,uint256,uint256)
           handler: handleRechargeGlasses
-        - event: TreasuryUpdated(indexed address,indexed address)
+        - event: TreasuryUpdated(address,address)
           handler: handleTreasuryUpdated
-        - event: VoucherAssociated(indexed uint256,indexed uint8)
+        - event: VoucherAssociated(uint256,uint8)
           handler: handleVoucherAssociated
-        - event: VoucherDissociated(indexed uint256,indexed uint8)
+        - event: VoucherDissociated(uint256,uint8)
           handler: handleVoucherDissociated
+        - event: VoucherMint(indexed address,indexed uint8,uint256)
+          handler: handleVoucherMinted
       file: ./src/script-tv.ts

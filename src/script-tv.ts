@@ -1,17 +1,20 @@
 import {
   EarnPoolReward as EarnPoolRewardEvent,
-  EarningPayout as EarningPayoutEvent,
+  PayoutEarned as EarningPayoutEvent,
   GemEquipped as GemEquippedEvent,
-  GlassConfiscated as GlassConfiscatedEvent,
-  GlassMinted as GlassMintedEvent,
+  GlassesConfiscated as GlassConfiscatedEvent,
+  GlassesMinted as GlassMintedEvent,
   LimitUpdated as LimitUpdatedEvent,
   OwnershipTransferred as OwnershipTransferredEvent,
   PercentageUpdated as PercentageUpdatedEvent,
-  RechargeGlasses as RechargeGlassesEvent,
+  GlassesRecharged as RechargeGlassesEvent,
   TreasuryUpdated as TreasuryUpdatedEvent,
   VoucherAssociated as VoucherAssociatedEvent,
-  VoucherDissociated as VoucherDissociatedEvent
+  VoucherDissociated as VoucherDissociatedEvent,
+  VoucherMint as VoucherMintedEvent,
+  ScriptTv
 } from "../generated/ScriptTv/ScriptTv"
+import {ScriptGlass} from "../generated/ScriptTv/ScriptGlass"
 import {
   EarnPoolReward,
   EarningPayout,
@@ -24,8 +27,12 @@ import {
   RechargeGlasses,
   TreasuryUpdated,
   VoucherAssociated,
-  VoucherDissociated
+  VoucherDissociated,
+  User,
+  Voucher,
+  VoucherMinted
 } from "../generated/schema"
+import { store } from '@graphprotocol/graph-ts'
 
 export function handleEarnPoolReward(event: EarnPoolRewardEvent): void {
   let entity = new EarnPoolReward(
@@ -102,6 +109,28 @@ export function handleGlassMinted(event: GlassMintedEvent): void {
   entity.save()
 }
 
+export function handleVoucherMinted(event: VoucherMintedEvent): void {
+  let entity = VoucherMinted.load(event.params.to)
+  if(!entity){
+    entity = new VoucherMinted(event.params.to)
+    entity.common = 0
+    entity.rare = 0
+    entity.superscript = 0
+  }
+  switch (event.params.voucherType) {
+    case 0:
+      entity.common = entity.common+1
+      break;
+    case 1:
+      entity.rare = entity.rare+1
+      break;
+    case 2:
+      entity.superscript = entity.superscript+1
+      break;
+  }
+  entity.save()
+}
+
 export function handleLimitUpdated(event: LimitUpdatedEvent): void {
   let entity = new LimitUpdated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -151,7 +180,7 @@ export function handleRechargeGlasses(event: RechargeGlassesEvent): void {
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.from = event.params.from
-  entity.value = event.params.value
+  entity.value = event.params.discountedAmount
   entity.glassId = event.params.glassId
   entity.nonce = event.params.nonce
 
@@ -180,6 +209,23 @@ export function handleVoucherAssociated(event: VoucherAssociatedEvent): void {
   let entity = new VoucherAssociated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
+  let scriptTv = ScriptTv.bind(event.address);
+  let glassContract = ScriptGlass.bind(scriptTv.scriptGlasses())
+
+  let userAddress = glassContract.ownerOf(event.params.glassID)
+  let user = User.load(userAddress)
+  if(!user){
+    user = new User(userAddress)
+  }
+  user.save()
+
+  let voucher = new Voucher(userAddress.toString().concat("-").concat(event.params.glassID.toString()))
+  voucher.glassID = event.params.glassID
+  voucher.voucherType = event.params.voucherType
+  voucher.user = userAddress
+
+  voucher.save()
+
   entity.glassID = event.params.glassID
   entity.voucherType = event.params.voucherType
 
@@ -194,6 +240,23 @@ export function handleVoucherDissociated(event: VoucherDissociatedEvent): void {
   let entity = new VoucherDissociated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
+
+  let scriptTv = ScriptTv.bind(event.address);
+  let glassContract = ScriptGlass.bind(scriptTv.scriptGlasses())
+
+  let userAddress = glassContract.ownerOf(event.params.glassID)
+  let user = User.load(userAddress)
+  if(!user){
+    user = new User(userAddress)
+  }
+  user.save()
+
+  let voucher = Voucher.load(userAddress.toString().concat("-").concat(event.params.glassID.toString()))
+  if(!voucher){
+    return
+  }
+  store.remove("Voucher", userAddress.toString().concat("-").concat(event.params.glassID.toString()))
+
   entity.glassID = event.params.glassID
   entity.voucherType = event.params.voucherType
 

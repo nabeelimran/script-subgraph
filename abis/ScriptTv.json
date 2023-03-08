@@ -15,45 +15,102 @@
         "internalType": "contract IScriptVoucher",
         "name": "_scriptVoucher",
         "type": "address"
+      },
+      {
+        "internalType": "contract IGlassPass",
+        "name": "_glassPass",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
-  { "inputs": [], "name": "AlreadyClaimed", "type": "error" },
-  { "inputs": [], "name": "AssetNotOwned", "type": "error" },
-  { "inputs": [], "name": "DailyRechargeLimitExceeds", "type": "error" },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "balance", "type": "uint256" },
-      { "internalType": "uint256", "name": "required", "type": "uint256" }
-    ],
+    "inputs": [],
+    "name": "AlreadyClaimed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AssetNotOwned",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DailyRechargeLimitExceeds",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InsufficientFunds",
     "type": "error"
   },
   {
-    "inputs": [
-      { "internalType": "uint24", "name": "supply", "type": "uint24" }
-    ],
+    "inputs": [],
     "name": "InsufficientSupply",
     "type": "error"
   },
-  { "inputs": [], "name": "InvalidSignature", "type": "error" },
-  { "inputs": [], "name": "LimitIsInvalid", "type": "error" },
-  { "inputs": [], "name": "PercentageOutOfRange", "type": "error" },
-  { "inputs": [], "name": "PoolRewardAlreadyClaimed", "type": "error" },
-  { "inputs": [], "name": "SameAsOld", "type": "error" },
-  { "inputs": [], "name": "TransactionAlreadyExecuted", "type": "error" },
+  {
+    "inputs": [],
+    "name": "InvalidSignature",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LimitIsInvalid",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PercentageOutOfRange",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PoolRewardAlreadyClaimed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SameAsOld",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TransactionAlreadyExecuted",
+    "type": "error"
+  },
   {
     "inputs": [
-      { "internalType": "enum ScriptNFTType", "name": "_type", "type": "uint8" }
+      {
+        "internalType": "enum ScriptNFTType",
+        "name": "_type",
+        "type": "uint8"
+      }
     ],
     "name": "TypeOutOfRange",
     "type": "error"
   },
-  { "inputs": [], "name": "VoucherNotCompatible", "type": "error" },
-  { "inputs": [], "name": "ZeroAddress", "type": "error" },
-  { "inputs": [], "name": "ZeroAmount", "type": "error" },
+  {
+    "inputs": [],
+    "name": "VoucherAlreadyEquipped",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VoucherNotCompatible",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAmount",
+    "type": "error"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -97,13 +154,13 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "to",
+        "name": "user",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "tokenID",
         "type": "uint256"
       },
       {
@@ -113,20 +170,20 @@
         "type": "uint256"
       }
     ],
-    "name": "EarningPayout",
+    "name": "FreeMinted",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "glassID",
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint8",
         "name": "gemType",
         "type": "uint8"
@@ -145,51 +202,82 @@
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "tokenID",
         "type": "uint256"
       }
     ],
-    "name": "GlassConfiscated",
+    "name": "GlassesConfiscated",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "address",
         "name": "user",
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "tokenID",
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "enum ScriptNFTType",
         "name": "glassType",
         "type": "uint8"
       }
     ],
-    "name": "GlassMinted",
+    "name": "GlassesMinted",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "glassId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "discountedAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "nonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "GlassesRecharged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint8",
         "name": "oldLimit",
         "type": "uint8"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint8",
         "name": "newLimit",
         "type": "uint8"
@@ -222,12 +310,37 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "nonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "PayoutEarned",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "oldPercentage",
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "newPercentage",
         "type": "uint256"
@@ -240,44 +353,13 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "glassId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "nonce",
-        "type": "uint256"
-      }
-    ],
-    "name": "RechargeGlasses",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
         "internalType": "address",
         "name": "oldTreasury",
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "address",
         "name": "newTreasury",
         "type": "address"
@@ -290,13 +372,13 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "glassID",
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "enum VoucherType",
         "name": "voucherType",
         "type": "uint8"
@@ -309,13 +391,13 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "glassID",
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "enum VoucherType",
         "name": "voucherType",
         "type": "uint8"
@@ -325,13 +407,47 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "enum VoucherType",
+        "name": "voucherType",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "nonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "VoucherMint",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "internalType": "enum VoucherType",
         "name": "_voucherType",
         "type": "uint8"
       },
-      { "internalType": "uint256", "name": "_glassId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_glassId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_sig",
+        "type": "bytes"
+      }
     ],
     "name": "associateVoucher",
     "outputs": [],
@@ -340,17 +456,35 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
     "name": "associatedVouchers",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_tokenID", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_tokenID",
+        "type": "uint256"
+      }
     ],
     "name": "confiscateGlasses",
     "outputs": [],
@@ -359,10 +493,26 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "_nonce", "type": "uint256" },
-      { "internalType": "bytes", "name": "_sig", "type": "bytes" },
-      { "internalType": "string", "name": "_type", "type": "string" }
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_sig",
+        "type": "bytes"
+      },
+      {
+        "internalType": "string",
+        "name": "_type",
+        "type": "string"
+      }
     ],
     "name": "earningPayout",
     "outputs": [],
@@ -371,11 +521,31 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "_nonce", "type": "uint256" },
-      { "internalType": "bytes", "name": "_sig", "type": "bytes" },
-      { "internalType": "uint256", "name": "_poolId", "type": "uint256" },
-      { "internalType": "uint256", "name": "_gemId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_sig",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_gemId",
+        "type": "uint256"
+      }
     ],
     "name": "earningPoolReward",
     "outputs": [],
@@ -384,10 +554,26 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_glassId", "type": "uint256" },
-      { "internalType": "uint8", "name": "_gemType", "type": "uint8" },
-      { "internalType": "uint256", "name": "_nonce", "type": "uint256" },
-      { "internalType": "bytes", "name": "_sig", "type": "bytes" }
+      {
+        "internalType": "uint256",
+        "name": "_glassId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_gemType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_sig",
+        "type": "bytes"
+      }
     ],
     "name": "equipGem",
     "outputs": [],
@@ -395,63 +581,174 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "name": "executed",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "freemiumOwner",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
-    "name": "gemPrices",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_glassId", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "freemiumOwner",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "name": "gemPrices",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_glassId",
+        "type": "uint256"
+      }
     ],
     "name": "getRechargeCount",
-    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_to", "type": "address" },
-      { "internalType": "uint256", "name": "_amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "_nonce", "type": "uint256" },
-      { "internalType": "string", "name": "_type", "type": "string" }
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_type",
+        "type": "string"
+      }
     ],
     "name": "getTxHash",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "glasses",
+    "inputs": [],
+    "name": "glassPass",
     "outputs": [
-      { "internalType": "uint24", "name": "maxSupply", "type": "uint24" },
-      { "internalType": "uint24", "name": "mintedSupply", "type": "uint24" },
-      { "internalType": "uint256", "name": "glassCost", "type": "uint256" }
+      {
+        "internalType": "contract IGlassPass",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_user", "type": "address" },
-      { "internalType": "uint256", "name": "_nonce", "type": "uint256" },
-      { "internalType": "bytes", "name": "_sig", "type": "bytes" }
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "glasses",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "maxSupply",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint24",
+        "name": "mintedSupply",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint208",
+        "name": "glassCost",
+        "type": "uint208"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_sig",
+        "type": "bytes"
+      }
     ],
     "name": "mintFreemiumGlasses",
     "outputs": [],
@@ -460,7 +757,16 @@
   },
   {
     "inputs": [
-      { "internalType": "enum ScriptNFTType", "name": "_type", "type": "uint8" }
+      {
+        "internalType": "enum ScriptNFTType",
+        "name": "_type",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "_useGlassPass",
+        "type": "bool"
+      }
     ],
     "name": "mintGlasses",
     "outputs": [],
@@ -469,14 +775,26 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_to", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
       {
         "internalType": "enum VoucherType",
         "name": "_voucherType",
         "type": "uint8"
       },
-      { "internalType": "uint256", "name": "_nonce", "type": "uint256" },
-      { "internalType": "bytes", "name": "_sig", "type": "bytes" }
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_sig",
+        "type": "bytes"
+      }
     ],
     "name": "mintRechargeVoucher",
     "outputs": [],
@@ -485,53 +803,141 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" },
-      { "internalType": "bytes", "name": "", "type": "bytes" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
     ],
     "name": "onERC1155BatchReceived",
-    "outputs": [{ "internalType": "bytes4", "name": "", "type": "bytes4" }],
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "bytes", "name": "", "type": "bytes" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
     ],
     "name": "onERC1155Received",
-    "outputs": [{ "internalType": "bytes4", "name": "", "type": "bytes4" }],
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
     "name": "poolRewardClaimed",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "_nonce", "type": "uint256" },
-      { "internalType": "bytes", "name": "_sig", "type": "bytes" },
-      { "internalType": "uint256", "name": "_glassId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_sig",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_glassId",
+        "type": "uint256"
+      }
     ],
     "name": "rechargeGlasses",
     "outputs": [],
@@ -541,23 +947,47 @@
   {
     "inputs": [],
     "name": "rechargeLimitPerDay",
-    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
     "name": "rechargeTimes",
-    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_glassId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_glassId",
+        "type": "uint256"
+      }
     ],
     "name": "releaseVoucher",
     "outputs": [],
@@ -599,7 +1029,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint8", "name": "_newLimit", "type": "uint8" }
+      {
+        "internalType": "uint8",
+        "name": "_newLimit",
+        "type": "uint8"
+      }
     ],
     "name": "setRechargeLimitPerDay",
     "outputs": [],
@@ -608,7 +1042,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_newTreasury", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "_newTreasury",
+        "type": "address"
+      }
     ],
     "name": "setTreasury",
     "outputs": [],
@@ -617,7 +1055,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_newPercentage", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_newPercentage",
+        "type": "uint256"
+      }
     ],
     "name": "setTreasuryPercentage",
     "outputs": [],
@@ -628,23 +1070,41 @@
     "inputs": [],
     "name": "spay",
     "outputs": [
-      { "internalType": "contract IScriptPay", "name": "", "type": "address" }
+      {
+        "internalType": "contract IScriptPay",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }
+      {
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
+      }
     ],
     "name": "supportsInterface",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "transferOwnership",
     "outputs": [],
@@ -654,14 +1114,26 @@
   {
     "inputs": [],
     "name": "treasury",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "treasuryPercentage",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -672,7 +1144,11 @@
         "name": "voucherType",
         "type": "uint8"
       },
-      { "internalType": "uint256", "name": "newPrice", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "newPrice",
+        "type": "uint256"
+      }
     ],
     "name": "updateVoucherMintPrice",
     "outputs": [],
@@ -686,7 +1162,11 @@
         "name": "voucherType",
         "type": "uint8"
       },
-      { "internalType": "uint256", "name": "newSupply", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "newSupply",
+        "type": "uint256"
+      }
     ],
     "name": "updateVoucherSupply",
     "outputs": [],
