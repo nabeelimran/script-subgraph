@@ -1,0 +1,155 @@
+type EarnPoolReward @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  amount: BigInt! # uint256
+  nonce: BigInt! # uint256
+  cycleNo: BigInt! # uint256
+  gemId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FreeMinted @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  tokenID: BigInt! # uint256
+  nonce: BigInt! # uint256
+  mintedSupply: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GemEquipped @entity(immutable: true) {
+  id: Bytes!
+  glassID: BigInt! # uint256
+  gemType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GlassesConfiscated @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  tokenID: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GlassesMinted @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  tokenID: BigInt! # uint256
+  glassType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GlassesRecharged @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  glassId: BigInt! # uint256
+  discountedAmount: BigInt! # uint256
+  nonce: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LimitUpdated @entity(immutable: true) {
+  id: Bytes!
+  oldLimit: Int! # uint8
+  newLimit: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PayoutEarned @entity(immutable: true) {
+  id: Bytes!
+  to: Bytes! # address
+  amount: BigInt! # uint256
+  nonce: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PercentageUpdated @entity(immutable: true) {
+  id: Bytes!
+  oldPercentage: BigInt! # uint256
+  newPercentage: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PoolPercentagesUpdated @entity(immutable: true) {
+  id: Bytes!
+  percentage1: Int! # uint8
+  percentage2: Int! # uint8
+  percentage3: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RewardCyclesFunded @entity(immutable: true) {
+  id: Bytes!
+  rewardAmount: BigInt! # uint256
+  noOfCycles: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TreasuryUpdated @entity(immutable: true) {
+  id: Bytes!
+  oldTreasury: Bytes! # address
+  newTreasury: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type VoucherAssociated @entity(immutable: true) {
+  id: Bytes!
+  glassID: BigInt! # uint256
+  voucherType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type VoucherDissociated @entity(immutable: true) {
+  id: Bytes!
+  glassID: BigInt! # uint256
+  voucherType: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type VoucherMint @entity(immutable: true) {
+  id: Bytes!
+  to: Bytes! # address
+  voucherType: Int! # uint8
+  glassID: BigInt! # uint256
+  nonce: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

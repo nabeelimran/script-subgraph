@@ -1,0 +1,69 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: chapel
+    source:
+      address: "0xefA6263E6E62f27a4C1eAca263cBF1A6Dee8a932"
+      abi: Contract
+      startBlock: 30821189
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - EarnPoolReward
+        - FreeMinted
+        - GemEquipped
+        - GlassesConfiscated
+        - GlassesMinted
+        - GlassesRecharged
+        - LimitUpdated
+        - OwnershipTransferred
+        - PayoutEarned
+        - PercentageUpdated
+        - PoolPercentagesUpdated
+        - RewardCyclesFunded
+        - TreasuryUpdated
+        - VoucherAssociated
+        - VoucherDissociated
+        - VoucherMint
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: EarnPoolReward(indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleEarnPoolReward
+        - event: FreeMinted(indexed address,uint256,uint256,uint256)
+          handler: handleFreeMinted
+        - event: GemEquipped(uint256,uint8)
+          handler: handleGemEquipped
+        - event: GlassesConfiscated(indexed address,uint256)
+          handler: handleGlassesConfiscated
+        - event: GlassesMinted(address,uint256,uint8)
+          handler: handleGlassesMinted
+        - event: GlassesRecharged(address,uint256,uint256,uint256)
+          handler: handleGlassesRecharged
+        - event: LimitUpdated(uint8,uint8)
+          handler: handleLimitUpdated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PayoutEarned(indexed address,uint256,uint256)
+          handler: handlePayoutEarned
+        - event: PercentageUpdated(uint256,uint256)
+          handler: handlePercentageUpdated
+        - event: PoolPercentagesUpdated(uint8,uint8,uint8)
+          handler: handlePoolPercentagesUpdated
+        - event: RewardCyclesFunded(uint256,uint256)
+          handler: handleRewardCyclesFunded
+        - event: TreasuryUpdated(address,address)
+          handler: handleTreasuryUpdated
+        - event: VoucherAssociated(uint256,uint8)
+          handler: handleVoucherAssociated
+        - event: VoucherDissociated(uint256,uint8)
+          handler: handleVoucherDissociated
+        - event: VoucherMint(indexed address,indexed uint8,indexed uint256,uint256)
+          handler: handleVoucherMint
+      file: ./src/contract.ts
