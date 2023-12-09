@@ -1,3 +1,4 @@
+import { store } from "@graphprotocol/graph-ts"
 import {
   EarnPoolReward as EarnPoolRewardEvent,
   FreeMinted as FreeMintedEvent,
@@ -14,8 +15,10 @@ import {
   TreasuryUpdated as TreasuryUpdatedEvent,
   VoucherAssociated as VoucherAssociatedEvent,
   VoucherDissociated as VoucherDissociatedEvent,
-  VoucherMint as VoucherMintEvent
+  VoucherMint as VoucherMintEvent,
+  Contract
 } from "../generated/Contract/Contract"
+import {ScriptGlass, Transfer as GlassTransferEvent} from "../generated/Contract/ScriptGlass"
 import {
   EarnPoolReward,
   FreeMinted,
@@ -30,6 +33,8 @@ import {
   PoolPercentagesUpdated,
   RewardCyclesFunded,
   TreasuryUpdated,
+  User,
+  Voucher,
   VoucherAssociated,
   VoucherDissociated,
   VoucherMint
@@ -231,10 +236,35 @@ export function handleTreasuryUpdated(event: TreasuryUpdatedEvent): void {
   entity.save()
 }
 
+export function handleGlassTransfer(event: GlassTransferEvent): void {
+  let voucher = Voucher.load(event.params.tokenId.toString())
+  if(voucher){
+    voucher.user = event.params.to
+    voucher.save()
+  }
+}
+
 export function handleVoucherAssociated(event: VoucherAssociatedEvent): void {
   let entity = new VoucherAssociated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
+  let scriptTv = Contract.bind(event.address);
+  let glassContract = ScriptGlass .bind(scriptTv.scriptGlasses())
+
+  let userAddress = glassContract.ownerOf(event.params.glassID)
+  let user = User.load(userAddress)
+  if(!user){
+    user = new User(userAddress)
+  }
+  user.save()
+
+  let voucher = new Voucher(event.params.glassID.toString())
+  voucher.glassID = event.params.glassID
+  voucher.voucherType = event.params.voucherType
+  voucher.user = userAddress
+
+  voucher.save()
+
   entity.glassID = event.params.glassID
   entity.voucherType = event.params.voucherType
 
@@ -249,6 +279,23 @@ export function handleVoucherDissociated(event: VoucherDissociatedEvent): void {
   let entity = new VoucherDissociated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
+
+  let scriptTv = Contract.bind(event.address);
+  let glassContract = ScriptGlass.bind(scriptTv.scriptGlasses())
+
+  let userAddress = glassContract.ownerOf(event.params.glassID)
+  let user = User.load(userAddress)
+  if(!user){
+    user = new User(userAddress)
+  }
+  user.save()
+
+  let voucher = Voucher.load(event.params.glassID.toString())
+  if(!voucher){
+    return
+  }
+  store.remove("Voucher", event.params.glassID.toString())
+
   entity.glassID = event.params.glassID
   entity.voucherType = event.params.voucherType
 

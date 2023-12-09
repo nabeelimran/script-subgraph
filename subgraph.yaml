@@ -30,9 +30,12 @@ dataSources:
         - VoucherAssociated
         - VoucherDissociated
         - VoucherMint
+        # - Transfer
       abis:
         - name: Contract
           file: ./abis/Contract.json
+        - name: ScriptGlass
+          file: ./abis/ScriptGlass.json
       eventHandlers:
         - event: EarnPoolReward(indexed address,indexed uint256,uint256,uint256,uint256)
           handler: handleEarnPoolReward
@@ -66,4 +69,28 @@ dataSources:
           handler: handleVoucherDissociated
         - event: VoucherMint(indexed address,indexed uint8,indexed uint256,uint256)
           handler: handleVoucherMint
+        # - event: Transfer(indexed address, indexed address, indexed uint256)
+        #   handler: handleGlassTransfer
+      file: ./src/contract.ts
+  - kind: ethereum
+    name: ScriptGlass
+    network: chapel
+    source:
+      address: "0xD61830674a41127F295Bb14772218CD1ce5D06d9"
+      abi: ScriptGlass
+      startBlock: 30821189
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+        - name: ScriptGlass
+          file: ./abis/ScriptGlass.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleGlassTransfer
       file: ./src/contract.ts
